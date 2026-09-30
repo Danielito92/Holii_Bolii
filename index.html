@@ -6,7 +6,7 @@
     <title>Para Ti</title>
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com/css2?family=Dancing+Script:wght=700&family=Quicksand:wght=400;600&display=swap" rel="stylesheet">
     
     <style>
         * { box-sizing: border-box; }
@@ -84,14 +84,13 @@
             margin-top: 25px;
             padding-top: 20px;
         }
-        /* Contenedor del reproductor de música estético */
         .reproductor-wrapper {
             margin-top: 20px;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             background: #000;
-            height: 80px; /* Altura compacta estilo barra de reproducción */
+            height: 80px; 
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -120,10 +119,10 @@
         
         <div id="sorpresa" class="contenido-sorpresa">
             <div class="mensaje-oculto">
-                Holii Guapa, te dejo esto por acá porque quería que fuera lo primero que veas al despertar (ya debes estar mas despierta que yo jaja). Pero igual quiero recordarte lo mucho que te amo y todo lo especial que eres para mi. Que tengas un hermoso dia, te mando un beso enorme. Posdata: perdon lo cursi :')
+                Holii Guapa, te dejo esto por acá porque quería que fuera lo primero que veas al despertar (ya debes estar mas despierta que yo jaja). Pero igual quiero recordarte lo mucho que te amo y todo lo especial que eres para mi. Que tengas un hermoso dia, te mando un beso enorme. Posdata: perdon lo cursi :') y me avisas si se abre, estoy aprendiendo jaja TE AMO
             </div>
             
-            <!-- Bloque del reproductor compacto -->
+            <!-- Cambiado al video oficial de Ed Sheeran (2Vv-BfVoq4g) que permite reproducción externa universal -->
             <div class="reproductor-wrapper">
                 <iframe 
                     id="ytPlayer"
@@ -141,15 +140,12 @@
 
     <script>
         function abrirSorpresa() {
-            // Muestra el mensaje y el reproductor
             document.getElementById('sorpresa').style.display = 'block';
             document.getElementById('btnAccion').style.display = 'none';
 
-            // Ordena al reproductor de YouTube iniciar con sonido integrado mediante la API
             const iframe = document.getElementById('ytPlayer');
             iframe.src += "&autoplay=1";
 
-            // Inicia la lluvia de corazones
             setInterval(crearCorazon, 300);
         }
 
