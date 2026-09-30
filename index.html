@@ -65,17 +65,13 @@
             cursor: pointer;
             box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
             transition: all 0.3s ease;
-            display: inline-block;
         }
         .btn-carta:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 25px rgba(255, 77, 109, 0.4);
         }
-        .contenido-sorpresa {
-            display: none;
-            animation: fadeIn 0.8s ease forwards;
-        }
         .mensaje-oculto {
+            display: none;
             font-size: 1.15rem;
             color: #555555;
             line-height: 1.6;
@@ -83,14 +79,7 @@
             text-align: left;
             margin-top: 25px;
             padding-top: 20px;
-        }
-        .reproductor-wrapper {
-            margin-top: 20px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            background: #000;
-            height: 80px; 
+            animation: fadeIn 0.8s ease forwards;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -117,34 +106,24 @@
         
         <button class="btn-carta" id="btnAccion" onclick="abrirSorpresa()">Abrir mi mensaje</button>
         
-        <div id="sorpresa" class="contenido-sorpresa">
-            <div class="mensaje-oculto">
-                Holii Guapa, te dejo esto por acá porque quería que fuera lo primero que veas al despertar (ya debes estar mas despierta que yo jaja). Pero igual quiero recordarte lo mucho que te amo y todo lo especial que eres para mi. Que tengas un hermoso dia, te mando un beso enorme. Posdata: perdon lo cursi :')  y me avisas si se abre, estoy aprendiendo jaja TE AMO
-            </div>
-            
-            <div class="reproductor-wrapper">
-                <!-- Se agregó el parámetro &start=21 para saltar la introducción muda -->
-                <iframe 
-                    id="ytPlayer"
-                    width="100%" 
-                    height="80" 
-                    src="https://youtube.com" 
-                    title="YouTube music player" 
-                    frameborder="0" 
-                    allow="autoplay; encrypted-media" 
-                    allowfullscreen>
-                </iframe>
-            </div>
+        <div id="carta" class="mensaje-oculto">
+            Holii Guapa, te dejo esto por acá porque quería que fuera lo primero que veas al despertar (ya debes estar mas despierta que yo jaja). Pero igual quiero recordarte lo mucho que te amo y todo lo especial que eres para mi. Que tengas un hermoso dia, te mando un beso enorme. Posdata: perdon lo cursi :') me avisas si se abre, estoy aprendiendo jaja TE AMO
         </div>
     </div>
 
+    <!-- Audio directo libre de bloqueos -->
+    <audio id="musicaFondo" loop preload="auto">
+        <source src="https://soundhelix.com" type="audio/mpeg">
+    </audio>
+
     <script>
         function abrirSorpresa() {
-            document.getElementById('sorpresa').style.display = 'block';
+            document.getElementById('carta').style.display = 'block';
             document.getElementById('btnAccion').style.display = 'none';
 
-            const iframe = document.getElementById('ytPlayer');
-            iframe.src += "&autoplay=1";
+            // Reproducción nativa inmediata
+            const musica = document.getElementById('musicaFondo');
+            musica.play().catch(error => console.log("Audio bloqueado por el sistema"));
 
             setInterval(crearCorazon, 300);
         }
