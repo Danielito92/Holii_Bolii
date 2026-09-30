@@ -4,22 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para Ti</title>
-    <!-- Importamos fuentes elegantes desde Google Fonts -->
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            /* Fondo con degradado animado moderno */
             background: linear-gradient(-45deg, #ff9a9e, #fecfef, #feada6, #f3a6b5);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
@@ -44,7 +40,6 @@
             width: 85%;
             z-index: 10;
             border: 1px solid rgba(255, 255, 255, 0.5);
-            transition: all 0.5s ease;
         }
         h1 {
             font-family: 'Dancing Script', cursive;
@@ -52,7 +47,7 @@
             margin: 0 0 10px 0;
             color: #d63384;
         }
-        p.subtitulo {
+        .subtitulo {
             font-size: 1.5rem;
             font-weight: 600;
             margin: 0 0 25px 0;
@@ -69,42 +64,31 @@
             cursor: pointer;
             box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
             transition: all 0.3s ease;
-            font-family: 'Quicksand', sans-serif;
         }
         .btn-carta:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 25px rgba(255, 77, 109, 0.4);
         }
-        .btn-carta:active {
-            transform: translateY(-1px);
-        }
         .mensaje-oculto {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: max-height 0.8s ease, opacity 0.8s ease, margin-top 0.5s ease;
+            display: none;
             font-size: 1.15rem;
             color: #555555;
             line-height: 1.6;
             border-top: 1px dashed #ffb3c6;
             text-align: left;
-            padding: 0 5px;
-        }
-        .mensaje-oculto.mostrar {
-            max-height: 300px;
-            opacity: 1;
             margin-top: 25px;
             padding-top: 20px;
+            animation: fadeIn 0.8s ease forwards;
         }
-        /* Estilos para los corazones flotantes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         .corazon-flotante {
             position: absolute;
             bottom: -50px;
-            color: #ff4d6d;
-            font-size: 20px;
             pointer-events: none;
             animation: flotar 4s linear forwards;
-            opacity: 0.8;
             z-index: 1;
         }
         @keyframes flotar {
@@ -116,11 +100,18 @@
             bottom: 20px;
             font-size: 0.85rem;
             background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(5px);
             padding: 6px 16px;
             border-radius: 20px;
             color: #666;
             z-index: 10;
+        }
+        /* Escondemos el reproductor de YouTube para mantener la estética limpia */
+        #player {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -133,59 +124,62 @@
         <button class="btn-carta" id="btnAccion" onclick="abrirSorpresa()">Abrir mi mensaje</button>
         
         <div id="carta" class="mensaje-oculto">
-            Holii Guapa, te dejo esto por acá porque quería que fuera lo primero que veas al despertar (ya debes estar mas despierta que yo jaja). Pero igual quiero recordarte lo mucho que te amo y todo lo especial que eres para mi. Que tengas un hermoso dia, te mando un beso enorme. Posdata: perdon lo cursi :')
+            Holii Guapa, te dejo esto por acá porque quería que fuera lo primero que veas al despertar (ya debes estar mas despierta que yo jaja). Pero igual quiero recordarte lo mucho que te amo y todo lo especial que eres para mi. Que tengas un hermoso dia, te mando un beso enorme. Posdata: perdon lo cursi :') y me avisas si lo pudiste leer.. TE AMO
         </div>
     </div>
 
-    <!-- MÚSICA DE FONDO: REEMPLAZA EL TEXTO EN MAYÚSCULAS POR EL ENLACE DE TU CANCIÓN -->
-    <audio id="musicaFondo" loop>
-        <source src="https://files.catbox.moe/u9kad7.mp3" type="audio/mpeg">
-    </audio>
+    <!-- Contenedor invisible para la API de YouTube -->
+    <div id="player"></div>
 
     <div class="controles-musica">
         🎵 La música se activa al abrir la carta
     </div>
 
-    <script>
-        function abrirSorpresa() {
-            // Desplegar el mensaje de forma fluida
-            const carta = document.getElementById('carta');
-            carta.classList.add('mostrar');
+    <!-- Cargamos los scripts oficiales de YouTube -->
+    <script src="https://youtube.com"></script>
 
-            // Ocultar suavemente el botón principal si deseas, o dejarlo
+    <script>
+        let player;
+
+        // REEMPLAZA LAS LETRAS DE ABAJO EN VIDEO_ID POR EL CÓDIGO DE TU CANCIÓN DE YOUTUBE
+        const VIDEO_ID = 'JcamjK-uNa4'; 
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '1',
+                width: '1',
+                videoId: VIDEO_ID,
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'loop': 1,
+                    'playlist': VIDEO_ID
+                }
+            });
+        }
+
+        function abrirSorpresa() {
+            document.getElementById('carta').style.display = 'block';
             document.getElementById('btnAccion').style.display = 'none';
 
-            // Intentar reproducir la música
-            const musica = document.getElementById('musicaFondo');
-            musica.play().catch(error => {
-                console.log("Audio bloqueado temporalmente por el navegador.");
-            });
+            // Activa la reproducción oficial de YouTube de forma permitida por el navegador
+            if (player && player.playVideo) {
+                player.playVideo();
+            }
 
-            // Iniciar la lluvia de corazones continuos
             setInterval(crearCorazon, 300);
         }
 
         function crearCorazon() {
             const corazon = document.createElement('div');
             corazon.classList.add('corazon-flotante');
-            
-            // Variedad de emojis de corazones
             const tipos = ['❤️', '💖', '💝', '💕', '🌸'];
             corazon.innerText = tipos[Math.floor(Math.random() * tipos.length)];
-            
-            // Posición horizontal aleatoria y tamaño aleatorio
             corazon.style.left = Math.random() * 100 + 'vw';
             corazon.style.fontSize = Math.random() * 20 + 15 + 'px';
-            
-            // Duración aleatoria de la animación para que se vea natural
             corazon.style.animationDuration = Math.random() * 2 + 3 + 's';
-            
             document.body.appendChild(corazon);
-            
-            // Eliminar el elemento después de que termine la animación
-            setTimeout(() => {
-                corazon.remove();
-            }, 5000);
+            setTimeout(() => { corazon.remove(); }, 5000);
         }
     </script>
 
