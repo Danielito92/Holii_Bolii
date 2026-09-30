@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Ti</title>
+    <!-- Importamos fuentes elegantes desde Google Fonts -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            /* Fondo con degradado animado moderno */
+            background: linear-gradient(-45deg, #ff9a9e, #fecfef, #feada6, #f3a6b5);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Quicksand', sans-serif;
+            color: #4a4a4a;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 40px 30px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            max-width: 420px;
+            width: 85%;
+            z-index: 10;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.5s ease;
+        }
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            margin: 0 0 10px 0;
+            color: #d63384;
+        }
+        p.subtitulo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 0 25px 0;
+            color: #ff4d6d;
+        }
+        .btn-carta {
+            background: linear-gradient(135deg, #ff4d6d, #ff758f);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
+            transition: all 0.3s ease;
+            font-family: 'Quicksand', sans-serif;
+        }
+        .btn-carta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(255, 77, 109, 0.4);
+        }
+        .btn-carta:active {
+            transform: translateY(-1px);
+        }
+        .mensaje-oculto {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.8s ease, opacity 0.8s ease, margin-top 0.5s ease;
+            font-size: 1.15rem;
+            color: #555555;
+            line-height: 1.6;
+            border-top: 1px dashed #ffb3c6;
+            text-align: left;
+            padding: 0 5px;
+        }
+        .mensaje-oculto.mostrar {
+            max-height: 300px;
+            opacity: 1;
+            margin-top: 25px;
+            padding-top: 20px;
+        }
+        /* Estilos para los corazones flotantes */
+        .corazon-flotante {
+            position: absolute;
+            bottom: -50px;
+            color: #ff4d6d;
+            font-size: 20px;
+            pointer-events: none;
+            animation: flotar 4s linear forwards;
+            opacity: 0.8;
+            z-index: 1;
+        }
+        @keyframes flotar {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-105vh) rotate(360deg); opacity: 0; }
+        }
+        .controles-musica {
+            position: absolute;
+            bottom: 20px;
+            font-size: 0.85rem;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(5px);
+            padding: 6px 16px;
+            border-radius: 20px;
+            color: #666;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>¡Buenos días!</h1>
+        <p class="subtitulo">Te amo ❤️</p>
+        
+        <button class="btn-carta" id="btnAccion" onclick="abrirSorpresa()">Abrir mi mensaje</button>
+        
+        <div id="carta" class="mensaje-oculto">
+            Holii Guapa, te dejo esto por acá porque quería que fuera lo primero que veas al despertar (ya debes estar mas despierta que yo jaja). Pero igual quiero recordarte lo mucho que te amo y todo lo especial que eres para mi. Que tengas un hermoso dia, te mando un beso enorme. Posdata: perdon lo cursi :')
+        </div>
+    </div>
+
+    <!-- MÚSICA DE FONDO: REEMPLAZA EL TEXTO EN MAYÚSCULAS POR EL ENLACE DE TU CANCIÓN -->
+    <audio id="musicaFondo" loop>
+        <source src="https://files.catbox.moe/u9kad7.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="controles-musica">
+        🎵 La música se activa al abrir la carta
+    </div>
+
+    <script>
+        function abrirSorpresa() {
+            // Desplegar el mensaje de forma fluida
+            const carta = document.getElementById('carta');
+            carta.classList.add('mostrar');
+
+            // Ocultar suavemente el botón principal si deseas, o dejarlo
+            document.getElementById('btnAccion').style.display = 'none';
+
+            // Intentar reproducir la música
+            const musica = document.getElementById('musicaFondo');
+            musica.play().catch(error => {
+                console.log("Audio bloqueado temporalmente por el navegador.");
+            });
+
+            // Iniciar la lluvia de corazones continuos
+            setInterval(crearCorazon, 300);
+        }
+
+        function crearCorazon() {
+            const corazon = document.createElement('div');
+            corazon.classList.add('corazon-flotante');
+            
+            // Variedad de emojis de corazones
+            const tipos = ['❤️', '💖', '💝', '💕', '🌸'];
+            corazon.innerText = tipos[Math.floor(Math.random() * tipos.length)];
+            
+            // Posición horizontal aleatoria y tamaño aleatorio
+            corazon.style.left = Math.random() * 100 + 'vw';
+            corazon.style.fontSize = Math.random() * 20 + 15 + 'px';
+            
+            // Duración aleatoria de la animación para que se vea natural
+            corazon.style.animationDuration = Math.random() * 2 + 3 + 's';
+            
+            document.body.appendChild(corazon);
+            
+            // Eliminar el elemento después de que termine la animación
+            setTimeout(() => {
+                corazon.remove();
+            }, 5000);
+        }
+    </script>
+
+</body>
+</html>
