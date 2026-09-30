@@ -6,7 +6,7 @@
     <title>Para Ti</title>
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght=400;600&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com/css2?family=Dancing+Script:wght=700&family=Quicksand:wght=400;600&display=swap" rel="stylesheet">
     
     <style>
         * { box-sizing: border-box; }
@@ -22,7 +22,7 @@
             font-family: 'Quicksand', sans-serif;
             color: #4a4a4a;
             text-align: center;
-            overflow-x: hidden;
+            overflow: hidden;
             position: relative;
             padding: 20px;
         }
@@ -79,11 +79,6 @@
             text-align: left;
             margin-top: 25px;
             padding-top: 20px;
-            animation: fadeIn 0.8s ease forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
         .corazon-flotante {
             position: absolute;
@@ -107,25 +102,27 @@
         <button class="btn-carta" id="btnAccion" onclick="abrirSorpresa()">Abrir mi mensaje</button>
         
         <div id="carta" class="mensaje-oculto">
-            Holii Guapa, te dejo esto por acá porque quería que fuera lo primero que veas al despertar (ya debes estar mas despierta que yo jaja). Pero igual quiero recordarte lo mucho que te amo y todo lo especial que eres para mi. Que tengas un hermoso dia, te mando un beso enorme. Posdata: perdon lo cursi :') me avisas si te llega, estoy aprendiendo jaja TE AMO
+            Holii Guapa, te dejo esto por acá porque quería que fuera lo primero que veas al despertar (ya debes estar mas despierta que yo jaja). Pero igual quiero recordarte lo mucho que te amo y todo lo especial que eres para mi. Que tengas un hermoso dia, te mando un beso enorme. Posdata: perdon lo cursi :') me avisas si puedes abrir, estoy aprendiendo jaaja TE AMO
         </div>
     </div>
 
-    <!-- Enlace directo de Pixabay con comando anti-caché integrado (?v=final) -->
+    <!-- Enlace directo alternativo y estable para la reproducción nativa sin interferencias de red -->
     <audio id="musicaFondo" loop preload="auto">
-        <source src="https://pixabay.com" type="audio/mpeg">
+        <source src="https://soundhelix.com" type="audio/mpeg">
     </audio>
 
     <script>
         function abrirSorpresa() {
+            // Detiene cualquier parpadeo mostrando el bloque de golpe y ocultando el botón al instante
             document.getElementById('carta').style.display = 'block';
             document.getElementById('btnAccion').style.display = 'none';
 
-            // Reproducción nativa inmediata
+            // Activa el audio nativo de inmediato 
             const musica = document.getElementById('musicaFondo');
-            musica.play().catch(error => console.log("Audio bloqueado por el sistema"));
+            musica.play().catch(error => console.log("Audio bloqueado por políticas del navegador"));
 
-            setInterval(crearCorazon, 300);
+            // Lluvia de corazones
+            setInterval(crearCorazon, 350);
         }
 
         function crearCorazon() {
@@ -137,7 +134,7 @@
             corazon.style.fontSize = Math.random() * 20 + 15 + 'px';
             corazon.style.animationDuration = Math.random() * 2 + 3 + 's';
             document.body.appendChild(corazon);
-            setTimeout(() => { corazon.remove(); }, 5000);
+            setTimeout(() => { corazon.remove(); }, 4500);
         }
     </script>
 
